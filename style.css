@@ -1,0 +1,23 @@
+body {
+  background-color: #fefefe;
+  font-family: Arial Black, sans-serif;
+  text-align: center;
+  padding-top: 50px;
+}
+
+.logo {
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.promo {
+  width: 100%;
+  max-width: 600px;
+}
+
+input, button {
+  padding: 10px;
+  font-size: 16px;
+  margin: 10px;
+}
+
