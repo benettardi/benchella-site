@@ -1,29 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Benchella</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <img src="images/Benchella-logo.jpg" alt="Benchella Logo" class="logo">
-  <form onsubmit="return checkPassword()">
-    <input type="password" id="password" placeholder="Enter Password" required>
-    <button type="submit">Enter</button>
-  </form>
-  <script>
-    function checkPassword() {
-      const input = document.getElementById("password").value;
-      if (input === "LEBRONJAMES") {
-        window.location.href = "secret.html";
-      } else if (input === "MIAHARTMANN") {
-        window.location.href = "mia.html";
-      } else {
-        alert("Incorrect password.");
-      }
-      return false;
+<script>
+  function checkPassword() {
+    const input = document.getElementById("password").value;
+    if (input === "LEBRONJAMES") {
+      window.location.href = "secret.html";
+    } else if (input === "MIAHARTMANN") {
+      window.location.href = "mia.html";
+    } else if (input === "SHITAINTLEATHER") {
+      window.location.href = "leather.html";
+    } else {
+      alert("Incorrect password.");
     }
-  </script>
-</body>
-</html>
+    return false;
+  }
+</script>
 
