@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown to Benchella</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .countdown {
+      font-size: 3em;
+      font-weight: bold;
+      color: #333;
+      margin: 20px 0;
+    }
+
+    .message {
+      font-size: 1.5em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Countdown to Benchella</h1>
+    <div id="countdown" class="countdown"></div>
+    <p class="message">Time Until Benchella</p>
+  </div>
+
+  <script>
+    function updateCountdown() {
+      const targetDate = new Date("May 24, 2025 21:00:00").getTime();
+      const currentDate = new Date().getTime();
+      const timeRemaining = targetDate - currentDate;
+
+      if (timeRemaining <= 0) {
+        document.getElementById("countdown").innerHTML = "Happy 
+Birthday!";
+        clearInterval(countdownInterval);
+        return;
+      }
+
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / 
+(1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / 
+(1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML =
+        days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+    }
+
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown(); // Initial call to display countdown immediately
+  </script>
+
+</body>
+</html>
+
