@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Polaroid Wall</title>
+  <script type="module">
+    import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from 
+"https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwpGOPqpES2cWI08kyZLYNDDhrfF4o_8c",
+      authDomain: "benchella-polaroid.firebaseapp.com",
+      projectId: "benchella-polaroid",
+      storageBucket: "benchella-polaroid.firebasestorage.app",
+      messagingSenderId: "1035617872821",
+      appId: "1:1035617872821:web:d8529a56d4e9771a5a87fc"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function uploadPolaroid() {
+      const imageUrl = document.getElementById('imageUrl').value;
+      const caption = document.getElementById('caption').value;
+
+      await addDoc(collection(db, "polaroids"), {
+        imageURL: imageUrl,
+        caption: caption
+      });
+
+      alert("Upload successful! Refresh to see your post.");
+    }
+
+    async function loadPolaroids() {
+      const querySnapshot = await getDocs(collection(db, "polaroids"));
+      const wall = document.getElementById('polaroidWall');
+      wall.innerHTML = '';
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        wall.innerHTML += `
+          <div>
+            <img src="${data.imageURL}" alt="Polaroid" 
+style="width:200px"><br>
+            <p>${data.caption}</p>
+          </div>
+        `;
+      });
+    }
+
+    window.uploadPolaroid = uploadPolaroid;
+    window.onload = loadPolaroids;
+  </script>
+</head>
+<body>
+  <h1>Polaroid Wall</h1>
+  <input type="text" id="imageUrl" placeholder="Direct image URL"><br>
+  <input type="text" id="caption" placeholder="Caption"><br>
+  <button onclick="uploadPolaroid()">Upload</button>
+
+  <hr>
+
+  <div id="polaroidWall"></div>
+</body>
+</html>
+
