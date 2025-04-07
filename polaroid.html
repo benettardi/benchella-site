@@ -1,66 +1,122 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Polaroid Wall</title>
-  <script type="module">
-    import { initializeApp } from 
-"https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs } from 
-"https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  <title>Benchella Polaroid Wall</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #fff;
+    }
+    form {
+      margin-top: 30px;
+    }
+    input[type="file"], input[type="text"] {
+      margin: 10px;
+      padding: 8px;
+    }
+    button {
+      padding: 8px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .polaroid {
+      display: inline-block;
+      margin: 20px;
+      text-align: center;
+    }
+    .polaroid img {
+      width: 200px;
+      height: auto;
+      border: 3px solid black;
+    }
+  </style>
+</head>
+<body>
+  <h1>📸 Benchella Polaroid Wall</h1>
 
+  <form id="uploadForm">
+    <input type="file" id="imageFile" accept="image/*" required />
+    <br>
+    <input type="text" id="caption" placeholder="Write a caption..." 
+required />
+    <br>
+    <button type="submit">Upload</button>
+  </form>
+
+  <div id="status"></div>
+
+  <h2>Wall</h2>
+  <div id="polaroidWall"></div>
+
+  <!-- Firebase SDKs -->
+  <script 
+src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script 
+src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script 
+src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAwpGOPqpES2cWI08kyZLYNDDhrfF4o_8c",
       authDomain: "benchella-polaroid.firebaseapp.com",
       projectId: "benchella-polaroid",
-      storageBucket: "benchella-polaroid.firebasestorage.app",
+      storageBucket: "benchella-polaroid.appspot.com",
       messagingSenderId: "1035617872821",
       appId: "1:1035617872821:web:d8529a56d4e9771a5a87fc"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+    const db = firebase.firestore();
 
-    async function uploadPolaroid() {
-      const imageUrl = document.getElementById('imageUrl').value;
-      const caption = document.getElementById('caption').value;
+    // Handle uploads
+    document.getElementById("uploadForm").addEventListener("submit", async 
+function (e) {
+      e.preventDefault();
+      const file = document.getElementById("imageFile").files[0];
+      const caption = document.getElementById("caption").value;
 
-      await addDoc(collection(db, "polaroids"), {
-        imageURL: imageUrl,
-        caption: caption
-      });
+      if (!file || !caption) return;
 
-      alert("Upload successful! Refresh to see your post.");
-    }
+      const fileName = Date.now() + "-" + file.name;
+      const storageRef = storage.ref("polaroids/" + fileName);
+      const uploadTask = storageRef.put(file);
 
-    async function loadPolaroids() {
-      const querySnapshot = await getDocs(collection(db, "polaroids"));
-      const wall = document.getElementById('polaroidWall');
-      wall.innerHTML = '';
-      querySnapshot.forEach((doc) => {
+      uploadTask.on("state_changed", null, 
+        (error) => alert("Upload failed: " + error),
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            db.collection("polaroids").add({
+              imageURL: downloadURL,
+              caption: caption,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            document.getElementById("status").innerText = "Uploaded!";
+            document.getElementById("uploadForm").reset();
+          });
+        }
+      );
+    });
+
+    // Load and display polaroids
+    db.collection("polaroids").orderBy("timestamp", 
+"desc").onSnapshot((snapshot) => {
+      const wall = document.getElementById("polaroidWall");
+      wall.innerHTML = "";
+      snapshot.forEach((doc) => {
         const data = doc.data();
         wall.innerHTML += `
-          <div>
-            <img src="${data.imageURL}" alt="Polaroid" 
-style="width:200px"><br>
+          <div class="polaroid">
+            <img src="${data.imageURL}" alt="Polaroid">
             <p>${data.caption}</p>
           </div>
         `;
       });
-    }
-
-    window.uploadPolaroid = uploadPolaroid;
-    window.onload = loadPolaroids;
+    });
   </script>
-</head>
-<body>
-  <h1>Polaroid Wall</h1>
-  <input type="text" id="imageUrl" placeholder="Direct image URL"><br>
-  <input type="text" id="caption" placeholder="Caption"><br>
-  <button onclick="uploadPolaroid()">Upload</button>
-
-  <hr>
-
-  <div id="polaroidWall"></div>
 </body>
 </html>
 

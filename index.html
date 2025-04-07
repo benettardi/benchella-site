@@ -1,74 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Benchella</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      background-color: #fff;
-      font-family: 'Arial Black', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    img.logo {
-      width: 300px;
-      margin-bottom: 30px;
-      cursor: pointer;
-    }
-
-    .input-container {
-      display: flex;
-      gap: 10px;
-    }
-
-    input[type="password"] {
-      padding: 10px;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-
-  <img src="images/Benchella-logo.jpg" alt="Benchella Logo" class="logo" 
-id="logo">
-  
-  <div class="input-container">
-    <input type="password" id="password" placeholder="Enter Password">
-    <button onclick="checkPassword()">Enter</button>
-  </div>
-
   <script>
-    let clickCount = 0;
-    const logo = document.getElementById("logo");
-
-    logo.addEventListener("click", () => {
-      clickCount++;
-      if (clickCount === 5) {
-        window.location.href = "easteregg.html";
-      }
-    });
-
     function checkPassword() {
-      const password = 
-document.getElementById("password").value.trim().toUpperCase();
-      switch (password) {
+      const input = 
+document.getElementById("password").value.toUpperCase();
+      switch (input) {
         case "MIAHARTMANN":
           window.location.href = "mia.html";
           break;
         case "SHITAINTLEATHER":
-          window.location.href = "leather.html";
+          window.location.href = "shitaintleather.html";
           break;
         case "YABO1":
           window.location.href = "yabo1.html";
@@ -82,18 +26,25 @@ document.getElementById("password").value.trim().toUpperCase();
         case "CONFESS":
           window.location.href = "confess.html";
           break;
-        case "POLAROID":
-          window.location.href = "polaroid.html";
-          break;
         case "REQUEST":
           window.location.href = "request.html";
           break;
+        case "LEBRONJAMES":
+          window.location.href = "secret.html";
+          break;
         default:
-          alert("Wrong password.");
+          alert("Wrong password. Try again.");
       }
     }
   </script>
-
+</head>
+<body>
+  <div class="container">
+    <img src="images/Benchella-logo.jpg" alt="Benchella Logo" 
+class="logo">
+    <input type="password" id="password" placeholder="Enter Password">
+    <button onclick="checkPassword()">Enter</button>
+  </div>
 </body>
 </html>
 
