@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Countdown to Benchella</title>
+  <title>Countdown to May 24, 2025</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -44,9 +44,9 @@
 <body>
 
   <div class="container">
-    <h1>Countdown to Benchella</h1>
+    <h1>Countdown to May 24, 2025 at 9:00 PM</h1>
     <div id="countdown" class="countdown"></div>
-    <p class="message">Time Until Benchella</p>
+    <p class="message">Time until my special day!</p>
   </div>
 
   <script>
@@ -62,7 +62,12 @@ Birthday!";
         return;
       }
 
-      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const years = Math.floor(timeRemaining / (1000 * 60 * 60 * 24 * 
+365));
+      const months = Math.floor((timeRemaining % (1000 * 60 * 60 * 24 * 
+365)) / (1000 * 60 * 60 * 24 * 30));
+      const days = Math.floor((timeRemaining % (1000 * 60 * 60 * 24 * 30)) 
+/ (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / 
 (1000 * 60 * 60));
       const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / 
@@ -70,7 +75,8 @@ Birthday!";
       const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
       document.getElementById("countdown").innerHTML =
-        days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+        years + "Y " + months + "M " + days + "D " + hours + "H " + 
+minutes + "M " + seconds + "S";
     }
 
     const countdownInterval = setInterval(updateCountdown, 1000);
