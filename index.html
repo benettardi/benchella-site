@@ -1,50 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Benchella</title>
-  <link rel="stylesheet" href="style.css">
-  <script>
-    function checkPassword() {
-      const input = 
-document.getElementById("password").value.toUpperCase();
-      switch (input) {
-        case "MIAHARTMANN":
-          window.location.href = "mia.html";
-          break;
-        case "SHITAINTLEATHER":
-          window.location.href = "shitaintleather.html";
-          break;
-        case "YABO1":
-          window.location.href = "yabo1.html";
-          break;
-        case "YABO2":
-          window.location.href = "yabo2.html";
-          break;
-        case "BENCHELLA24":
-          window.location.href = "benchella24.html";
-          break;
-        case "CONFESS":
-          window.location.href = "confess.html";
-          break;
-        case "REQUEST":
-          window.location.href = "request.html";
-          break;
-        case "LEBRONJAMES":
-          window.location.href = "secret.html";
-          break;
-        default:
-          alert("Wrong password. Try again.");
-      }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
     }
-  </script>
+    .container {
+      text-align: center;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    input[type="password"] {
+      padding: 10px;
+      font-size: 18px;
+      margin: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #555;
+    }
+  </style>
 </head>
 <body>
+
   <div class="container">
-    <img src="images/Benchella-logo.jpg" alt="Benchella Logo" 
-class="logo">
-    <input type="password" id="password" placeholder="Enter Password">
-    <button onclick="checkPassword()">Enter</button>
+    <img src="images/Benchella-logo.jpg" alt="Benchella Logo" class="logo" 
+style="width: 200px;"/>
+    <h1>Enter Password</h1>
+    <form id="passwordForm">
+      <input type="password" id="password" placeholder="Enter Password">
+      <button type="submit">Enter</button>
+    </form>
   </div>
+
+  <script>
+    document.getElementById('passwordForm').addEventListener('submit', 
+function(event) {
+      event.preventDefault();
+      const password = 
+document.getElementById('password').value.trim().toUpperCase();
+
+      const routes = {
+        "JRODKNIFE": "secret.html",
+        "MIAHARTMANN": "mia.html",
+        "SHITAINTLEATHER": "shitaintleather.html",
+        "YABO1": "yabo1.html",
+        "YABO2": "yabo2.html",
+        "BENCHELLA24": "benchella24.html",
+        "CONFESS": "confess.html",
+        "REQUEST": "request.html",
+        "LEBRONJAMES": "secret.html"
+      };
+
+      if (routes[password]) {
+        window.location.href = routes[password];
+      } else {
+        alert("Wrong password, try again.");
+      }
+    });
+  </script>
+
 </body>
 </html>
 
