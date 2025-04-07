@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Song Request</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .container {
+      text-align: center;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Request a Song</h1>
+    <p>Enter the password to request a song via Google Form.</p>
+    <form id="passwordForm">
+      <input type="password" id="password" placeholder="Enter Password">
+      <button type="submit">Enter</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('passwordForm').addEventListener('submit', 
+function(event) {
+      event.preventDefault();
+      const password = 
+document.getElementById('password').value.trim().toUpperCase();
+
+      const routes = {
+        "REQUEST": "https://forms.gle/MjQrnjYj2mGSF9Zp7"
+      };
+
+      if (routes[password]) {
+        window.location.href = routes[password];
+      } else {
+        alert("Wrong password, try again.");
+      }
+    });
+  </script>
+
+</body>
+</html>
+
